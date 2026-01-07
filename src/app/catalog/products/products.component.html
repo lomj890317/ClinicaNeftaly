@@ -1,0 +1,108 @@
+<section class="container mt-4">
+
+  <h2 class="mb-4">Catálogo de productos</h2>
+
+  <!-- Botón para abrir modal -->
+  <div class="mb-3">
+    <button (click)="openModal()"
+            class="btn btn-primary">
+      Agregar Producto
+    </button>
+  </div>
+
+  <!-- Lista de productos -->
+  <div *ngIf="loading" class="alert alert-info">
+    Cargando productos...
+  </div>
+
+  <div class="table-responsive" *ngIf="!loading && products.length > 0">
+    <table class="table table-hover table-bordered align-middle shadow-sm">
+      <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Producto</th>
+        <th>Descripción</th>
+        <th>Stock</th>
+        <th>Precio</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let product of products"
+          [class.table-danger]="product.stock === 0"
+          [class.table-warning]="product.stock > 0 && product.stock < 20">
+
+        <td>{{ product.id }}</td>
+        <td class="fw-bold">{{ product.name }}</td>
+        <td>{{ product.description }}</td>
+
+        <td>
+          <span class="badge bg-danger" *ngIf="product.stock === 0">
+            Sin stock
+          </span>
+
+          <span class="badge bg-warning text-dark"
+                *ngIf="product.stock > 0 && product.stock < 20">
+            Bajo ({{ product.stock }})
+          </span>
+
+          <span class="badge bg-success" *ngIf="product.stock >= 20">
+            {{ product.stock }}
+          </span>
+        </td>
+
+        <td class="text-end">
+          ${{ product.price | number:'1.2-2' }}
+        </td>
+
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="!loading && products.length === 0"
+       class="alert alert-warning">
+    No hay productos registrados
+  </div>
+
+</section>
+
+<!-- Modal para agregar producto -->
+<div *ngIf="showModal" class="modal fade show d-block" style="background: rgba(0,0,0,0.5);">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">Agregar Producto</h5>
+        <button type="button" class="btn-close" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="productForm" (ngSubmit)="submitProduct()">
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input formControlName="name" class="form-control"/>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Descripción</label>
+            <input formControlName="description" class="form-control"/>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Stock</label>
+            <input type="number" formControlName="stock" class="form-control"/>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Precio</label>
+            <input type="number" step="0.01" formControlName="price" class="form-control"/>
+          </div>
+
+          <p class="text-danger" *ngIf="errorMessage">{{ errorMessage }}</p>
+          <p class="text-success" *ngIf="successMessage">{{ successMessage }}</p>
+
+          <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-secondary me-2" (click)="closeModal()">Cancelar</button>
+            <button type="submit" class="btn btn-success">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

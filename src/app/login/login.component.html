@@ -1,27 +1,40 @@
 <section class="text-gray-400 bg-opacity-40 relative">
   <div class="container px-12 py-36 mx-auto">
     <div class="lg:w-1/2 md:w-2/3 mx-auto">
-      <div class="flex flex-wrap -m-2">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-wrap -m-2">
+
         <div class="p-2 w-full">
           <div class="relative">
-            <label for="name" class="leading-7 text-sm text-blue-300">User</label>
-            <input type="text" id="name" name="name" autocomplete="off" class="w-full bg-opacity-40 rounded border border-blue-400 focus:border-blue-100 focus:ring-2 focus:ring-blue-700 text-base outline-none text-gray-400 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+            <label for="username" class="leading-7 text-sm text-blue-300">User</label>
+            <input type="text" id="username"
+                   formControlName="username"
+                   class="w-full bg-opacity-40 rounded border border-blue-400 focus:border-blue-100 focus:ring-2 focus:ring-blue-700 text-base outline-none text-gray-400 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                   required>
           </div>
         </div>
+
         <div class="p-2 w-full">
           <div class="relative">
             <label for="password" class="leading-7 text-sm text-blue-300">Password</label>
-            <input type="password" id="password" name="password" autocomplete="off" class="w-full bg-opacity-40 rounded border border-blue-400 focus:border-blue-100 focus:ring-2 focus:ring-blue-700 text-base outline-none text-gray-400 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+            <input type="password" id="password"
+                   formControlName="password"
+                   class="w-full bg-opacity-40 rounded border border-blue-400 focus:border-blue-100 focus:ring-2 focus:ring-blue-700 text-base outline-none text-gray-400 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                   required>
           </div>
         </div>
+
         <div class="p-2 w-full">
-          <br/><br/>
+          <button type="submit"
+                  class="flex mx-auto text-white bg-blue-900 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">
+            Login
+          </button>
         </div>
-        <div class="p-2 w-full">
-          <button class="flex mx-auto text-white bg-blue-900 border-0 py-2 px-8 focus:outline-none hover:bg-blue-400 rounded text-lg">Login</button>
+
+        <div class="p-2 w-full" *ngIf="errorMessage">
+          <p class="text-red-500 text-center">{{ errorMessage }}</p>
         </div>
-    
-      </div>
+
+      </form>
     </div>
   </div>
 </section>

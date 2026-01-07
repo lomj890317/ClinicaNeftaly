@@ -1,0 +1,13 @@
+table {
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+thead th {
+  text-align: center;
+}
+
+td {
+  vertical-align: middle;
+}
